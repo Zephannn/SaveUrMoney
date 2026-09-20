@@ -106,3 +106,5 @@ terpisah di key `saveurmoney_weekly_budget`.
 Lihat bagian *Future Development* di PRD: grafik visual, filter
 lanjutan, export/import data, dark/light toggle, kategori kustom,
 statistik bulanan, dan dukungan PWA/offline.
+
+Made by meh and my Hb(claude)
