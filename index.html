@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>saveUrMoney</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><text y=%2220%22 font-size=%2220%22>💰</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+<div class="container">
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#052A1E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </span>
+      <span class="brand-name">save<span class="dim">Ur</span>Money</span>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="btnBudgetSettings" title="Atur budget mingguan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="dashboard-grid">
+    <div class="summary-card">
+      <div class="summary-label">Saldo</div>
+      <div class="summary-balance" id="balanceValue">Rp0</div>
+      <div class="summary-row">
+        <div class="summary-stat">
+          <div class="stat-icon income">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+          </div>
+          <div class="stat-text">
+            <div class="label">Pemasukan</div>
+            <div class="value income" id="incomeValue">Rp0</div>
+          </div>
+        </div>
+        <div class="summary-stat">
+          <div class="stat-icon expense">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+          <div class="stat-text">
+            <div class="label">Pengeluaran</div>
+            <div class="value expense" id="expenseValue">Rp0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="budget-card" id="budgetCard">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-title">Kategori Pengeluaran</div>
+    <span class="section-link" id="weekRangeLabel"></span>
+  </div>
+  <div class="category-card" id="categoryCard">
+    <div class="empty-inline">Belum ada pengeluaran minggu ini.</div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-title">Riwayat Transaksi</div>
+  </div>
+  <div class="tx-card">
+    <div class="tx-filter-bar" id="filterBar">
+      <button class="filter-chip active" data-filter="all">Semua</button>
+      <button class="filter-chip" data-filter="income">Masuk</button>
+      <button class="filter-chip" data-filter="expense">Keluar</button>
+    </div>
+    <div class="tx-list" id="txList">
+      <div class="empty-inline">Belum ada transaksi dicatat. Mulai catat pengeluaranmu hari ini!</div>
+    </div>
+  </div>
+</div>
+
+<div class="fab">
+  <button id="btnAdd" aria-label="Tambah transaksi">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+</div>
+
+<!-- Transaction Form Sheet -->
+<div class="overlay" id="txOverlay">
+  <div class="sheet">
+    <div class="sheet-head">
+      <span class="sheet-title" id="txSheetTitle">Tambah Transaksi</span>
+      <button class="sheet-close" id="txClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="type-toggle" id="typeToggle">
+      <button type="button" class="active income" data-type="income">Uang Masuk</button>
+      <button type="button" class="expense" data-type="expense">Uang Keluar</button>
+    </div>
+
+    <form id="txForm" novalidate>
+      <input type="hidden" id="txId">
+
+      <div class="field">
+        <label for="txAmount">Nominal</label>
+        <div class="amount-input-wrap">
+          <span class="amount-prefix">Rp</span>
+          <input type="text" inputmode="numeric" id="txAmount" placeholder="0" autocomplete="off">
+        </div>
+        <div class="field-error" id="errAmount">Nominal harus lebih besar dari 0.</div>
+      </div>
+
+      <div class="field">
+        <label for="txCategory">Kategori</label>
+        <select id="txCategory"></select>
+        <div class="field-error" id="errCategory">Kategori wajib dipilih.</div>
+      </div>
+
+      <div class="field">
+        <label for="txDate">Tanggal</label>
+        <input type="date" id="txDate">
+        <div class="field-error" id="errDate">Tanggal wajib diisi.</div>
+      </div>
+
+      <div class="field">
+        <label for="txDesc">Keterangan (opsional)</label>
+        <input type="text" id="txDesc" placeholder="Contoh: Warnet, uang saku mingguan" autocomplete="off">
+      </div>
+
+      <button type="submit" class="btn-primary" id="txSubmitBtn">Simpan Transaksi</button>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirm Sheet -->
+<div class="overlay" id="deleteOverlay">
+  <div class="sheet">
+    <div class="confirm-box">
+      <div class="confirm-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6h16Z"/></svg>
+      </div>
+      <p class="q">Hapus transaksi ini?</p>
+      <p class="d">Apakah kamu yakin ingin menghapus transaksi ini? Tindakan ini tidak dapat dibatalkan.</p>
+      <button class="btn-danger" id="confirmDeleteBtn">Ya, Hapus</button>
+      <button class="btn-secondary" id="cancelDeleteBtn">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Budget Sheet -->
+<div class="overlay" id="budgetOverlay">
+  <div class="sheet">
+    <div class="sheet-head">
+      <span class="sheet-title">Budget Mingguan</span>
+      <button class="sheet-close" id="budgetClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="budgetForm">
+      <div class="field">
+        <label for="budgetInput">Jumlah budget per minggu</label>
+        <div class="amount-input-wrap">
+          <span class="amount-prefix">Rp</span>
+          <input type="text" inputmode="numeric" id="budgetInput" placeholder="500.000" autocomplete="off">
+        </div>
+      </div>
+      <button type="submit" class="btn-primary">Simpan Budget</button>
+      <button type="button" class="btn-secondary" id="btnResetData">Reset Data</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="data/categories.js"></script>
+<script src="assets/js/storage.js"></script>
+<script src="assets/js/calculator.js"></script>
+<script src="assets/js/transaction.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

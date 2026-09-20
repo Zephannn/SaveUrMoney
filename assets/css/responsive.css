@@ -1,0 +1,38 @@
+/* ==========================================================================
+   saveUrMoney — responsive.css
+   Breakpoints:
+     Mobile:  < 640px   (1 column, touch targets min 44px)   [default in style.css]
+     Tablet:  640–1024px (2 column dashboard split)
+     Desktop: > 1024px   (max container width 800px, centered)
+   Loaded AFTER style.css so these rules can override base styles.
+   ========================================================================== */
+
+/* ---------- Tablet (>= 640px) ---------- */
+@media (min-width: 640px) {
+  .overlay { align-items: center; }
+  .sheet { border-radius: 16px; }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .dashboard-grid .summary-card,
+  .dashboard-grid .budget-card {
+    margin-bottom: 0;
+  }
+}
+
+/* ---------- Desktop (>= 1024px) ---------- */
+@media (min-width: 1024px) {
+  .container { padding-top: 28px; }
+}
+
+/* ---------- Accessibility: reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
