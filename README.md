@@ -1,4 +1,4 @@
-# saveUrMoney
+# SaveUrMoney
 
 > "Know where your money goes."
 
